@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: 'App Icon Generator – iOS, Android, macOS & Windows Icons from SVG',
+    title: 'Apico – App Icon Generator for iOS, Android, macOS & Windows',
     description:
-        'Upload one SVG and instantly generate production-ready app icons for iOS, Android, macOS, and Windows. Download everything as a single ZIP file.',
+        'Upload one SVG and instantly generate production-ready app icons for iOS, Android, macOS, and Windows. Download everything as a single ZIP.',
     openGraph: {
         type: 'website',
-        title: 'App Icon Generator',
+        title: 'Apico – App Icon Generator',
         description:
             'Generate icons for iOS, Android, macOS & Windows — from a single SVG. Download as a ZIP in seconds.',
         images: [
@@ -15,24 +15,20 @@ export const metadata: Metadata = {
                 url: '/og-preview.png',
                 width: 1200,
                 height: 630,
-                alt: 'App Icon Generator – Generate icons for every platform from a single SVG',
+                alt: 'Apico – Generate app icons for every platform from a single SVG',
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'App Icon Generator',
+        title: 'Apico – App Icon Generator',
         description:
-            'Generate icons for iOS, Android, macOS & Windows — from a single SVG. Download as a ZIP in seconds.',
+            'Generate icons for iOS, Android, macOS & Windows — from a single SVG.',
         images: ['/og-preview.png'],
     },
 };
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
             <body>{children}</body>
