@@ -1,27 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* ── Theme tokens for Tailwind v4 ── */
+/* ── Neon Purple Theme Tokens ── */
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
 
-  --radius-4xl: 2rem;
-  --radius-5xl: 2.5rem;
-
-  --color-apico-dark: #0B0E14;
-
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 4px 24px 0 rgb(0 0 0 / 0.04);
-  --shadow-card-hover: 0 2px 8px 0 rgb(0 0 0 / 0.08), 0 8px 32px 0 rgb(0 0 0 / 0.06);
+  --color-purple-neon: #9e1ff9;
+  --color-purple-glow: #7b12c4;
+  --color-purple-light: #c06aff;
+  --color-purple-faint: rgba(158, 31, 249, 0.12);
+  --color-purple-card: rgba(30, 8, 60, 0.7);
+  --color-bg-deep: #06000f;
+  --color-bg-card: #110828;
+  --color-bg-tile: #1a0a38;
 
   --animate-fade-up: fadeUp 0.3s ease both;
-  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
-  --animate-spin-fast: spin 0.65s linear infinite;
+  --animate-pulse-glow: pulseGlow 2s ease-in-out infinite;
 }
 
+/* ── Keyframes ── */
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
 
   to {
@@ -30,7 +31,25 @@
   }
 }
 
-@keyframes shimmer {
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px 4px rgba(158, 31, 249, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 36px 8px rgba(158, 31, 249, 0.55);
+  }
+}
+
+@keyframes spinnerRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmerBg {
 
   0%,
   100% {
@@ -52,48 +71,132 @@
   }
 
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    background: #ffffff;
-    color: #0B0E14;
+    background: #06000f;
+    color: #f0e8ff;
+    min-height: 100vh;
   }
 }
 
-/* ── Custom utilities ── */
+/* ── Utilities ── */
 @layer utilities {
+
+  /* Spinner */
   .spinner {
     width: 18px;
     height: 18px;
-    border: 2.5px solid rgba(255, 255, 255, 0.35);
-    border-top-color: white;
+    border: 2.5px solid rgba(255, 255, 255, 0.25);
+    border-top-color: #9e1ff9;
     border-radius: 50%;
-    animation: spin 0.65s linear infinite;
+    animation: spinnerRotate 0.65s linear infinite;
     flex-shrink: 0;
   }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
+  /* Background mesh gradient */
+  .bg-mesh {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(158, 31, 249, 0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 85% 80%, rgba(100, 10, 180, 0.2) 0%, transparent 60%),
+      #06000f;
   }
 
-  .drag-shimmer::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(139, 92, 246, 0.06));
-    animation: shimmer 1.8s ease-in-out infinite;
-    border-radius: inherit;
-    pointer-events: none;
+  /* Glass card */
+  .glass-card {
+    background: rgba(17, 8, 40, 0.85);
+    border: 1px solid rgba(158, 31, 249, 0.25);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
   }
 
+  /* Platform tile */
+  .platform-tile {
+    background: rgba(26, 10, 56, 0.6);
+    border: 1px solid rgba(158, 31, 249, 0.2);
+    border-radius: 10px;
+    transition: all 0.15s ease;
+  }
+
+  .platform-tile:hover {
+    border-color: rgba(158, 31, 249, 0.5);
+    background: rgba(40, 14, 80, 0.7);
+  }
+
+  .platform-tile.selected {
+    border-color: #9e1ff9;
+    background: rgba(158, 31, 249, 0.12);
+    box-shadow: 0 0 12px rgba(158, 31, 249, 0.25);
+  }
+
+  /* Drop zone */
+  .dropzone-base {
+    background: rgba(20, 6, 46, 0.5);
+    border: 2px dashed rgba(158, 31, 249, 0.35);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .dropzone-base:hover,
+  .dropzone-drag {
+    border-color: #9e1ff9;
+    background: rgba(158, 31, 249, 0.08);
+    box-shadow: 0 0 24px rgba(158, 31, 249, 0.2), inset 0 0 20px rgba(158, 31, 249, 0.05);
+    animation: shimmerBg 1.8s ease-in-out infinite;
+  }
+
+  .dropzone-filled {
+    border-color: rgba(158, 31, 249, 0.5);
+    background: rgba(158, 31, 249, 0.06);
+  }
+
+  /* Neon purple gradient button */
+  .btn-neon {
+    background: linear-gradient(135deg, #7b12c4 0%, #9e1ff9 50%, #b94dff 100%);
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 20px rgba(158, 31, 249, 0.4);
+  }
+
+  .btn-neon:hover:not(:disabled) {
+    box-shadow: 0 0 36px rgba(158, 31, 249, 0.65);
+    transform: translateY(-1px);
+  }
+
+  .btn-neon:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 0 16px rgba(158, 31, 249, 0.4);
+  }
+
+  .btn-neon:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* Headline gradient */
+  .headline-gradient {
+    background: linear-gradient(90deg, #ffffff 0%, #c06aff 60%, #9e1ff9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Neon text */
+  .text-neon {
+    color: #9e1ff9;
+  }
+
+  /* Modal scroll */
   .modal-scroll {
     scrollbar-width: thin;
-    scrollbar-color: #E5E7EB transparent;
+    scrollbar-color: rgba(158, 31, 249, 0.4) transparent;
   }
 
   .modal-scroll::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
   }
 
   .modal-scroll::-webkit-scrollbar-track {
@@ -101,35 +204,55 @@
   }
 
   .modal-scroll::-webkit-scrollbar-thumb {
-    background: #E5E7EB;
-    border-radius: 3px;
+    background: rgba(158, 31, 249, 0.4);
+    border-radius: 2px;
   }
 
+  /* Code inline & block */
   .code-inline {
-    background: #F3F4F6;
-    color: #1F2937;
-    font-size: 0.75rem;
+    background: rgba(158, 31, 249, 0.15);
+    color: #c06aff;
+    font-size: 0.72rem;
     font-family: ui-monospace, 'Fira Code', monospace;
     padding: 1px 5px;
     border-radius: 4px;
+    border: 1px solid rgba(158, 31, 249, 0.25);
   }
 
   .code-block {
     display: block;
-    background: #111827;
-    color: #818cf8;
-    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: #c06aff;
+    font-size: 0.72rem;
     font-family: ui-monospace, 'Fira Code', monospace;
-    padding: 10px 14px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(158, 31, 249, 0.2);
     margin: 6px 0;
   }
 
-  .shadow-card {
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 4px 24px 0 rgb(0 0 0 / 0.04);
-  }
-
+  /* Animate fade-up */
   .animate-fade-up {
     animation: fadeUp 0.3s ease both;
+  }
+
+  /* Feature card */
+  .feature-card {
+    background: rgba(26, 10, 56, 0.4);
+    border: 1px solid rgba(158, 31, 249, 0.15);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  /* Divider */
+  .divider-purple {
+    border-color: rgba(158, 31, 249, 0.15);
+  }
+
+  /* Success card */
+  .success-card {
+    background: rgba(20, 80, 20, 0.3);
+    border: 1px solid rgba(80, 200, 80, 0.35);
+    border-radius: 12px;
   }
 }
